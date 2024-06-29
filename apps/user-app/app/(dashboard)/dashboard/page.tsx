@@ -15,6 +15,7 @@ import BuyerProfilePieChart from '../../../components/BuyerProfilePieChart'
 import { authOptions } from '../../lib/auth';
 import { getServerSession } from 'next-auth';
 import prisma from '@repo/db/client';
+import { redirect } from 'next/navigation';
 // import PopularProducts from '../../../components/PopularProducts'
 
 
@@ -153,6 +154,10 @@ async function getRecentTransactions() {
 }
 
 export default async function Dashboard() {
+    const session = await getServerSession(authOptions);
+    if(!session){
+        redirect('/api/auth/signin')
+    }
     const {requestReceivedAmt, requestReceivedCnt}= await getPaymentRequestsReceived();
     const {p2pSendAmt, p2pSendCnt} = await getP2PSend();
 

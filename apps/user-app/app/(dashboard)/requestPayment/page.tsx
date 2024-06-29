@@ -95,6 +95,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
 import { MyPaymentRequests } from "../../../components/MyPaymentRequests";
 import { useState } from "react";
+import { redirect } from "next/navigation";
 
 
 async function getPaymentRequests() {
@@ -130,7 +131,10 @@ async function getMyRequests() {
 }
 
 export default async function () {
-
+    const session = await getServerSession(authOptions);
+    if(!session){
+        redirect('/api/auth/signin')
+    }
 
     const paymentRequests = await getPaymentRequests();
     const myPaymentRequests = await getMyRequests();
