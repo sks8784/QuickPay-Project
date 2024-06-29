@@ -21,7 +21,7 @@ async function getAllTransactions() {
         },
     });
     
-    return transactions.map(transaction => ({
+    return transactions.map((transaction:any)=> ({
         id: transaction.id,
         transactionId: transaction.transactionId,
         sender: transaction.sender,

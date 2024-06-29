@@ -141,7 +141,7 @@ async function getRecentTransactions() {
         throw new Error('No transaction Found')
     }
 
-    return transactions.slice(0, 5).map(transaction => ({
+    return transactions.slice(0, 5).map((transaction:any) => ({
         id: transaction.id,
         transactionId: transaction.transactionId,
         sender: transaction.sender,
