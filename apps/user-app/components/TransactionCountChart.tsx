@@ -16,7 +16,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 	)
 }
 
-export default function BuyerProfilePieChart({
+export default function TransactionCountChart({
 	send, 
 	received,
 	onRamp
@@ -25,7 +25,11 @@ export default function BuyerProfilePieChart({
 	received:number,
 	onRamp:number
 }) {
-
+	
+	console.log(send);
+	console.log(received);
+	console.log(onRamp);
+	
 	const data = [
 		{ name: 'Send', value: send },
 		{ name: 'Received', value: received },

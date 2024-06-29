@@ -11,12 +11,11 @@
 import DashboardStatsGrid from '../../../components/DashboardStatsGrid'
 import TransactionChart from '../../../components/TransactionChart'
 import { TransactionsTable } from '../../../components/TransactionsTable'
-import BuyerProfilePieChart from '../../../components/BuyerProfilePieChart'
 import { authOptions } from '../../lib/auth';
 import { getServerSession } from 'next-auth';
 import prisma from '@repo/db/client';
 import { redirect } from 'next/navigation';
-// import PopularProducts from '../../../components/PopularProducts'
+import TransactionCountChart from '../../../components/TransactionCountChart';
 
 
 async function getPaymentRequestsReceived() {
@@ -175,7 +174,7 @@ export default async function Dashboard() {
             <div className="flex flex-row gap-4 w-full">
                 {/* <TransactionChart /> */}
                 <TransactionsTable tableName={'Recent Transactions'} transactions={transactions} />
-                <BuyerProfilePieChart send={requestReceivedCnt+p2pSendCnt} received={requestSendAmt+p2pReceivedCnt} onRamp={onRampTxnCnt}/>
+                <TransactionCountChart send={requestReceivedCnt+p2pSendCnt} received={requestSendCnt+p2pReceivedCnt} onRamp={onRampTxnCnt}/>
             </div>
             <div className="flex flex-row gap-4 w-full">
 

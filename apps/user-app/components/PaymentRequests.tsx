@@ -118,7 +118,7 @@ export const PaymentRequests = ({
                 {requests.map((request, index) => (
                     <div className="flex justify-between" key={index}>
                         <div>
-                            <div className="text-sm">
+                            <div className="text-sm mt-2">
                                 Request
                             </div>
                             <div className="text-slate-600 text-xs">
@@ -130,13 +130,16 @@ export const PaymentRequests = ({
                         </div>
                         {request.status === 'PENDING' ? (
                             <>
+                                <div className="flex mt-2">
                                 <Button onClick={() => handleAction(request.id, 'accept')}>Accept</Button>
                                 <Button onClick={() => handleAction(request.id, 'decline')}>Decline</Button>
+                                </div>
                             </>
                         ) : (
-                            <div className="text-slate-600 text-xs">
-                                {request.status}
-                            </div>
+                            <></>
+                            // <div className="text-slate-600 text-xs mt-2">
+                            //     {request.status}
+                            // </div>
                         )}
                     </div>
                 ))}

@@ -12,11 +12,13 @@ app.post("/hdfcWebhook", async (req, res) => {
     const paymentInformation: {
         token: string;
         userId: string;
-        amount: string
+        amount: string;
+        transactionid: string;
     } = {
         token: req.body.token,
         userId: req.body.user_identifier,
-        amount: req.body.amount
+        amount: req.body.amount,
+        transactionid: req.body.transactionId
     };
 
     try {
@@ -38,6 +40,14 @@ app.post("/hdfcWebhook", async (req, res) => {
                 }, 
                 data: {
                     status: "Success",
+                }
+            }),
+            db.transaction.updateMany({
+                where:{
+                    transactionId: paymentInformation.transactionid
+                },
+                data:{
+                    status: 'SUCCEEDED'
                 }
             })
         ]);
