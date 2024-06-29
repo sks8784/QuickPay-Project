@@ -1,0 +1,20 @@
+# Exported from Render on 2024-06-29T06:58:04Z
+services:
+- type: web
+  name: quickpay
+  runtime: image
+  image:
+    url: docker.io/shubham171/quickpay-user:latest
+    creds:
+      fromRegistryCreds:
+        name: MyCredentials
+  plan: free
+  envVars:
+  - key: NEXTAUTH_URL
+    sync: false
+  - key: JWT_SECRET
+    sync: false
+  - key: DATABASE_URL
+    sync: false
+  region: oregon
+version: "1"
