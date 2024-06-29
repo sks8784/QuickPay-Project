@@ -42,8 +42,8 @@ export async function requestPayment(receiverPhoneNumber: string, amount: number
             data: {
                 transactionId: transactionId,
                 userId: Number(senderId),
-                sender: sender?.quickpayId,
-                receiver: receiver?.quickpayId,
+                sender: receiver?.quickpayId,
+                receiver: sender?.quickpayId,
                 type: 'CREDIT',
                 status: 'PENDING',
                 amount,
@@ -55,8 +55,8 @@ export async function requestPayment(receiverPhoneNumber: string, amount: number
             data:{
                 transactionId: transactionId,
                 userId: receiver.id,
-                sender: sender?.quickpayId,
-                receiver: receiver?.quickpayId,
+                sender: receiver?.quickpayId,
+                receiver: sender?.quickpayId,
                 type: 'DEBIT',
                 status: 'PENDING',
                 amount,
