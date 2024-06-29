@@ -61,7 +61,7 @@ export default async function acceptOrDeclineRequest(requestId: number, action: 
             data: { status: 'DECLINED' },
         });
 
-        await prisma.transaction.update({
+        await prisma.transaction.updateMany({
             where: { transactionId: paymentRequest.transactionId },
             data: { status: 'DECLINED' }
         })
