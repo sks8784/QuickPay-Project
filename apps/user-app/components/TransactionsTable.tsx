@@ -81,56 +81,64 @@ export const TransactionsTable = ({
 		type: string
 	}[]
 }) => {
-	
+
 	return (
 		<div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
 			<strong className="text-gray-700 font-medium">{tableName}</strong>
 			<div className="border-x border-gray-200 rounded-sm mt-3">
-				{!transactions.length?(
+				{!transactions.length ? (
 					<div className='text-center pb-8 pt-8'>
 						No transactions available
 					</div>
-				):(
+				) : (
 					<table className="w-full text-gray-700">
-					<thead>
-						<tr>
-							<th>Transaction ID</th>
-							<th>From</th>
-							<th>To</th>
-							<th>Payment Method</th>
-							<th>Status</th>
-							<th>Amount</th>
-							<th>Txn Type</th>
-							{/* <th>Shipping Address</th>
+						<thead>
+							<tr>
+								<th>Transaction ID</th>
+								<th>From</th>
+								<th>To</th>
+								<th>Payment Method</th>
+								<th>Status</th>
+								<th>Amount</th>
+								<th>Txn Type</th>
+								{/* <th>Shipping Address</th>
 							<th>Order Status</th> */}
-						</tr>
-					</thead>
-					<tbody>
-						{transactions.map((t) => (
-							<tr key={t.id}>
-								<td>
-									{t?.transactionId}
-								</td>
-								<td>
-									{t?.sender}
-								</td>
-								<td>
-									{t?.receiver}
-								</td>
-								<td>
-									{t?.paymentMethod}
-								</td>
-								{/* <td>{format(new Date(order.order_date), 'dd MMM yyyy')}</td> */}
-								<td>{t?.status}</td>
-								<td>{t?.amount / 100}</td>
-								<td>{t?.type}</td>
-								{/* <td>{getOrderStatus(order.current_order_status)}</td> */}
 							</tr>
-						))}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{transactions.map((t) => (
+								<tr key={t.id}>
+									<td>
+										{t?.transactionId}
+									</td>
+									<td>
+										{t?.sender}
+									</td>
+									<td>
+										{t?.receiver}
+									</td>
+									<td>
+										{t?.paymentMethod}
+									</td>
+									{/* <td>{format(new Date(order.order_date), 'dd MMM yyyy')}</td> */}
+									<td className={
+										`font-medium ${t?.status === 'DECLINED' || t?.status === 'FAILED' ? 'text-red-500' :
+											t?.status === 'SUCCEEDED' ? 'text-green-500' :
+												t?.status === 'PENDING' ? 'text-yellow-500' : ''
+										}`
+									}>
+										{t?.status}
+									</td>
+
+									<td>{t?.amount / 100}</td>
+									<td>{t?.type}</td>
+									{/* <td>{getOrderStatus(order.current_order_status)}</td> */}
+								</tr>
+							))}
+						</tbody>
+					</table>
 				)}
-				
+
 			</div>
 		</div>
 	)

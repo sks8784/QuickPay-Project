@@ -21,7 +21,7 @@ export const MyPaymentRequests = ({
     }
     return <Card title="My Payment Requests">
         <div className="pt-2">
-            {myPaymentRequests.map((request,index) => <div className="flex justify-between" key={index}>
+            {myPaymentRequests.map((request,index) => <div className="flex justify-between mb-2" key={index}>
                 <div>
                     <div className="text-sm">
                         Your Requests
