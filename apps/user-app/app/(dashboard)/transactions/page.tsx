@@ -1,0 +1,43 @@
+// // import { Payment, columns } from "./columns"
+// // import { DataTable } from "./data-table"
+
+
+import {TransactionsTable} from "../../../components/TransactionsTable";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../lib/auth";
+import prisma from "@repo/db/client";
+
+
+async function getAllTransactions() {
+    const session = await getServerSession(authOptions);
+    
+    const transactions = await prisma.transaction.findMany({
+        where: {
+            userId: Number(session?.user?.id)
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+    });
+    
+    return transactions.map(transaction => ({
+        id: transaction.id,
+        transactionId: transaction.transactionId,
+        sender: transaction.sender,
+        receiver: transaction.receiver,
+        paymentMethod: transaction.paymentMethod,
+        amount: transaction.amount,
+        status: transaction.status,
+        type: transaction.type
+    }))
+}
+
+
+export default async function () {
+    const transactions = await getAllTransactions();
+
+    return <div className="w-full">
+        <TransactionsTable tableName={'Transactions History'} transactions={transactions}/>
+        
+    </div>
+}

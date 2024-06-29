@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int                 @id @default(autoincrement())
+  email             String?             @unique
+  name              String?
+  number            String              @unique
+  password          String
+  quickpayId        String              @unique
+  OnRampTransaction OnRampTransaction[]
+  Balance           Balance[]
+  sentTransfers     p2pTransfer[]       @relation(name: "FromUserRelation")
+  receivedTransfers p2pTransfer[]       @relation(name: "ToUserRelation")
+  sentRequests      PaymentRequest[]    @relation("SentRequests")
+  receivedRequests  PaymentRequest[]    @relation("ReceivedRequests")
+  transactions      Transaction[]       @relation("UserTransactions")
+}
+
+model Merchant {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  auth_type AuthType
+}
+
+model p2pTransfer {
+  id         Int          @id @default(autoincrement())
+  amount     Int
+  timestamp  DateTime
+  fromUserId Int
+  fromUser   User         @relation(name: "FromUserRelation", fields: [fromUserId], references: [id])
+  toUserId   Int
+  toUser     User         @relation(name: "ToUserRelation", fields: [toUserId], references: [id])
+}
+
+model PaymentRequest {
+  id                Int             @id @default(autoincrement())
+  amount            Float
+  status            PaymentStatus   @default(PENDING)
+  senderId          Int
+  receiverId        Int
+  sender            User            @relation("SentRequests", fields: [senderId], references: [id])
+  receiver          User            @relation("ReceivedRequests", fields: [receiverId], references: [id])
+  transactionId     String 
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  DECLINED
+  FAILED
+}
+
+model OnRampTransaction {
+  id        Int             @id @default(autoincrement())
+  status    OnRampStatus
+  token     String          @unique
+  provider  String
+  amount    Int
+  startTime DateTime
+  userId    Int
+  user      User            @relation(fields: [userId], references: [id])
+}
+
+model Balance {
+  id     Int  @id @default(autoincrement())
+  userId Int  @unique
+  amount Int
+  locked Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Transaction {
+  id             Int                    @id @default(autoincrement())
+  transactionId  String                 
+  userId         Int
+  user           User                   @relation("UserTransactions", fields: [userId], references: [id])
+  sender         String                 
+  receiver       String
+  amount         Int 
+  paymentMethod  String               
+  type           TransactionType
+  createdAt      DateTime               @default(now())
+  status         TransactionStatus      @default(PENDING)
+  updatedAt      DateTime               @updatedAt
+}
+
+enum TransactionType {
+  DEBIT
+  CREDIT
+}
+
+enum TransactionStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  DECLINED
+}
+
+enum AuthType {
+  Google
+  Github
+}
+
+enum OnRampStatus {
+  Success
+  Failure
+  Processing
+}
