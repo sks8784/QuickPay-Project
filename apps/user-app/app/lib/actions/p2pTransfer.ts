@@ -2,6 +2,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 import prisma from "@repo/db/client";
+import randomstring from 'randomstring'
 
 export async function p2pTransfer(to: string, amount: number) {
   const session = await getServerSession(authOptions);
@@ -67,7 +68,8 @@ export async function p2pTransfer(to: string, amount: number) {
       }
     })
 
-    const transactionId = Math.random().toString();
+    // const transactionId = Math.random().toString();
+    const transactionId = randomstring.generate(14);
 
     await tx.transaction.create({
       data: {

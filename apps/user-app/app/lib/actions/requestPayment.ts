@@ -2,6 +2,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 import prisma from "@repo/db/client";
+import randomstring from 'randomstring';
 
 export async function requestPayment(receiverPhoneNumber: string, amount: number) {
     try {
@@ -36,7 +37,7 @@ export async function requestPayment(receiverPhoneNumber: string, amount: number
         }
 
         //Create transaction
-        const transactionId=Math.random().toString();
+        const transactionId = randomstring.generate(14);
 
         await prisma.transaction.create({
             data: {

@@ -172,13 +172,11 @@ export default async function Dashboard() {
         <div className="w-full flex flex-col gap-4">
             <DashboardStatsGrid balance={balanceAmt} send={requestReceivedAmt+ p2pSendAmt} received={requestSendAmt + p2pReceivedAmt} onRamp={onRampTxnAmt} />
             <div className="flex flex-row gap-4 w-full">
-                {/* <TransactionChart /> */}
                 <TransactionsTable tableName={'Recent Transactions'} transactions={transactions} />
                 <TransactionCountChart send={requestReceivedCnt+p2pSendCnt} received={requestSendCnt+p2pReceivedCnt} onRamp={onRampTxnCnt}/>
             </div>
             <div className="flex flex-row gap-4 w-full">
 
-                {/* <PopularProducts /> */}
             </div>
         </div>
     )

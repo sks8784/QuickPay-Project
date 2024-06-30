@@ -3,11 +3,12 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 import prisma from "@repo/db/client";
+import randomstring from 'randomstring';
 
 export async function createOnRampTransaction(amount: number, provider: string) {
 
     const session = await getServerSession(authOptions);
-    const token = Math.random().toString();// this token will be provided by bank api, since we don't have a bank api so we are using a random token
+    const token = randomstring.generate(14);// this token will be provided by bank api, since we don't have a bank api so we are using a random token
 
     const userId = session.user.id;
     if (!userId) {
@@ -41,7 +42,7 @@ export async function createOnRampTransaction(amount: number, provider: string) 
 
     await prisma.transaction.create({
         data: {
-            transactionId: Math.random().toString(),
+            transactionId: randomstring.generate(14),
             userId: Number(userId),
             sender: provider,
             receiver: user?.quickpayId,
