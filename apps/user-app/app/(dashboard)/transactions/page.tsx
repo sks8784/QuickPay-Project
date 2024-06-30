@@ -42,7 +42,7 @@ export default async function () {
     const transactions = await getAllTransactions();
 
     return <div className="w-full">
-        <TransactionsTable tableName={'Transactions History'} transactions={transactions}/>
+        <TransactionsTable tableName={'Transaction History'} transactions={transactions}/>
         
     </div>
 }

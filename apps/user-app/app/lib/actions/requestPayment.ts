@@ -6,7 +6,6 @@ import randomstring from 'randomstring';
 
 export async function requestPayment(receiverPhoneNumber: string, amount: number) {
     try {
-
         const session = await getServerSession(authOptions);
         const senderId = session?.user?.id;
         if (!senderId) {
