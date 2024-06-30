@@ -1,9 +1,10 @@
 import express from "express";
 import db from "@repo/db/client";
+import bodyParser from "body-parser";
 
 const app = express();
 
-app.use(express.json())
+app.use(bodyParser.json())
 
 app.post("/hdfcWebhook", async (req, res) => {
     //TODO: Add zod validation here?
